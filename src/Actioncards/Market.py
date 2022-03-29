@@ -1,4 +1,4 @@
-from src.Cardtype.Actioncard import Actioncard
+from Cardtype.Actioncard import Actioncard
 
 
 class Market(Actioncard):

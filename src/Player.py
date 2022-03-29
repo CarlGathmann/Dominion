@@ -1,7 +1,7 @@
 import random
 
-from src.Moneycards.Copper import Copper
-from src.Victorycards.Estate import Estate
+from Moneycards.Copper import Copper
+from Victorycards.Estate import Estate
 from random import shuffle
 
 
@@ -10,6 +10,7 @@ class Player:
     def __init__(self):
         self.hand = []
         self.drawingPile = []
+        self.discardingPile = []
         self.createDeck()
         self.draw(5)
 
@@ -26,7 +27,9 @@ class Player:
             self.hand.append(card)
 
     def printDeck(self):
+        print("Hand:")
         for card in self.hand:
             print(card)
+        print("Drawing Pile:")
         for card in self.drawingPile:
             print(card)

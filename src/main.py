@@ -1,7 +1,11 @@
-from src.Actioncards.Market import Market
-from src.Player import Player
+from Actioncards.Market import Market
+from Player import Player
+
+QTY_PLAYERS = 2
 
 if __name__ == '__main__':
-    market = Market()
+    #INIT: create Players
+
     playerOne = Player()
-    playerOne.printDeck()
+    playerTwo = Player()
+    
