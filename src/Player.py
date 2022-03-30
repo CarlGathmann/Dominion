@@ -20,40 +20,25 @@ class Player:
         self.discardingPile = []
         self.played_and_bought_cards = []
         self.createDeck()
-        self.draw(5)
-
-    def createDeck(self):
-        for i in range(3):
-            self.drawingPile.append(Estate())
-        for i in range(7):
-            self.drawingPile.append(Copper())
-        self.drawingPile.append(Chapel())
-        random.shuffle(self.drawingPile)
-
-    def draw(self, cards: int):
-        for i in range(cards):
-            card = self.drawingPile.pop()
-            self.hand.append(card)
-
-    def printDeck(self):
-        print("Hand:")
-        for card in self.hand:
-            print(card)
-        print("Drawing Pile:")
-        for card in self.drawingPile:
-            print(card)
 
     def takeTurn(self):
+        # PREP
+        self.actions = 1
+        self.buys = 1
+        self.money = 0
+        self.draw(5)
         # ACTIONPHASE
+        self.printDeck()
+        self.printAttributes()
         self.playActions()
+        self.printAttributes()
         # BUYPHASE
         self.buyCards()
-        # LAY DOWN CARDS
+        self.printAttributes()
+        # DISCARD CARDS
         self.dicardCards()
 
     def playActions(self):
-        self.actions = 1
-        self.buys = 1
         while self.actions > 0:
             actioncards = self.getActionInHand()
             if len(actioncards) > 0:
@@ -63,32 +48,29 @@ class Player:
                 self.actions -= 1
             else:
                 self.actions = 0
-
-    def buyCards(self):
-        possible_buys = self.getPossibleBuys()
-        print(possible_buys)
-        self.buy(random.choice(possible_buys))
-
-    def getPossibleBuys(self):
         self.getMoneyInHand()
-        possible_buys = []
-        self.printAttributes()
-        for option in AllCards.cardlist.keys():
-            if self.money >= option:
-                possible_buys += AllCards.cardlist[option]
-        return possible_buys
 
     def playCard(self, card: Actioncard):
         print("playing: ", card.__str__())
         self.hand.remove(card)
+        self.played_and_bought_cards.append(card)
         self.actions += card.actions
         self.buys += card.buys
         self.money += card.money
-        while card.cards > 0:
-            drawncard = self.drawingPile.pop()
-            self.hand.append(drawncard)
-            card.cards -= 1
+        self.draw(card.cards)
         card.specialAction(self.hand)
+
+    def buyCards(self):
+        while self.buys > 0:
+            possible_buys = self.getPossibleBuys()
+            choice = random.choice(possible_buys)
+            self.played_and_bought_cards.append(choice)
+            self.buy(choice)
+
+    def buy(self, card: Card):
+        self.money -= card.expences
+        self.buys -= 1
+        print("Buying:", card)
 
     def getActionInHand(self):
         actions = []
@@ -102,15 +84,46 @@ class Player:
             if isinstance(card, Moneycard):
                 self.money += card.money
 
-    def printAttributes(self):
-        print("Actions: %s, Buys: %s, Money: %s" % (self.actions, self.buys, self.money))
+    def getPossibleBuys(self):
+        possible_buys = []
+        for option in AllCards.cardlist.keys():
+            if self.money >= option:
+                possible_buys += AllCards.cardlist[option]
+        return possible_buys
 
-    def buy(self, card: Card):
-        self.money -= card.expences
-        self.buys -= 1
-        print("Buying:", card)
+    def createDeck(self):
+        for i in range(3):
+            self.drawingPile.append(Estate())
+        for i in range(7):
+            self.drawingPile.append(Copper())
+        random.shuffle(self.drawingPile)
+
+    def draw(self, cards: int):
+        print("Drawing", cards, "cards...")
+        for i in range(cards):
+            try:
+                card = self.drawingPile.pop()
+                self.hand.append(card)
+            except IndexError:
+                self.drawingPile += self.discardingPile
+                self.discardingPile.clear()
+                random.shuffle(self.drawingPile)
+
+                card = self.drawingPile.pop()
+                self.hand.append(card)
 
     def dicardCards(self):
         self.discardingPile += self.hand
         self.discardingPile += self.played_and_bought_cards
         self.hand.clear()
+
+    def printAttributes(self):
+        print("Actions: %s, Buys: %s, Money: %s" % (self.actions, self.buys, self.money))
+
+    def printDeck(self):
+        print("Hand:")
+        for card in self.hand:
+            print(card)
+        print("Drawing Pile:")
+        for card in self.drawingPile:
+            print(card)

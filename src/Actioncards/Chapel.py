@@ -12,5 +12,4 @@ class Chapel(Actioncard):
         cards_to_trash = random.randint(0, 4)
         print("Trashing", cards_to_trash, "cards...")
         for card in range(cards_to_trash):
-            print(random.choice(hand))
             hand.remove(random.choice(hand))

@@ -1,4 +1,3 @@
-
 class Game:
     def __init__(self, players: list):
         self.gameOver = False
@@ -7,6 +6,5 @@ class Game:
 
     def nextTurn(self):
         for player in self.players:
-            player.takeTurn()
-            player.printDeck()
-            player.printAttributes()
+            for i in range(7):
+                player.takeTurn()
