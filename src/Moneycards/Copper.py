@@ -3,4 +3,4 @@ from Cardtype.Moneycard import Moneycard
 
 class Copper(Moneycard):
     def __init__(self):
-        self.money = 1
+        super().__init__(0, 1)

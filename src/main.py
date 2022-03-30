@@ -3,8 +3,6 @@ from Actioncards.Smithy import Smithy
 from Actioncards.Village import Village
 from Player import Player
 
-QTY_PLAYERS = 2
-
 if __name__ == '__main__':
     # INIT: create Players
 
@@ -16,5 +14,7 @@ if __name__ == '__main__':
     playerOne.hand.append(market)
     playerOne.hand.append(village)
     playerOne.hand.append(smithy)
+    # playerOne.printDeck()
     playerOne.takeTurn()
     playerOne.printAttributes()
+

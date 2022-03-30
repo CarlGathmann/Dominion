@@ -1,9 +1,9 @@
 import random
 import Card
-
+from Cardtype.Actioncard import Actioncard
 from Moneycards.Copper import Copper
 from Victorycards.Estate import Estate
-from Cardtype.Actioncard import Actioncard
+
 
 class Player:
 
@@ -51,7 +51,7 @@ class Player:
             else:
                 self.actions = 0
         # BUYPHASE
-            
+
     def playCard(self, card: Card):
         self.hand.remove(card)
         self.actions += card.actions

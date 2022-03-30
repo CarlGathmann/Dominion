@@ -4,5 +4,6 @@ from Card import Card
 class Victorycard(Card):
     pass
 
-    def __init__(self):
-        self.victorypoints = 0
+    def __init__(self, expences, victorypoints):
+        super().__init__(expences)
+        self.victorypoints = victorypoints

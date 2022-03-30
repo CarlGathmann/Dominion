@@ -3,4 +3,4 @@ from Cardtype.Victorycard import Victorycard
 
 class Estate(Victorycard):
     def __init__(self):
-        self.victorypoints = 1
+        super().__init__(2, 1)

@@ -1,7 +1,6 @@
-from src.Cardtype.Victorycard import Victorycard
+from Cardtype.Victorycard import Victorycard
 
 
 class Province(Victorycard):
     def __init__(self):
-        self.victorypoints = 6
-        
+        super().__init__(8, 6)

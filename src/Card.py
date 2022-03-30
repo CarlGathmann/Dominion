@@ -1,9 +1,8 @@
 class Card:
     pass
 
-    def __init__(self, expences, victorypoints):
+    def __init__(self, expences):
         self.expences = expences
-        self.victorypoints = victorypoints
 
     def __str__(self):
         return str(self.__class__).split(".")[-1].strip("'>")

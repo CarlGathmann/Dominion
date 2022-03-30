@@ -1,6 +1,6 @@
-from src.Cardtype.Moneycard import Moneycard
+from Cardtype.Moneycard import Moneycard
 
 
 class Silver(Moneycard):
     def __init__(self):
-        self.money = 3
+        super().__init__(3, 2)

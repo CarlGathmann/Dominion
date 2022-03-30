@@ -1,6 +1,6 @@
-from src.Cardtype.Victorycard import Victorycard
+from Cardtype.Victorycard import Victorycard
 
 
 class Dutchy(Victorycard):
     def __init__(self):
-        self.victorypoints = 3
+        super().__init__(5, 3)
