@@ -1,5 +1,6 @@
-from Cardtype.Victorycard import Victorycard
+from Cardtypes.Victorycard import Victorycard
 
 
 class Curse(Victorycard):
-    super().__init__(0, -1)
+    def __init__(self):
+        super().__init__(0, -1)

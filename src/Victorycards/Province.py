@@ -1,4 +1,4 @@
-from Cardtype.Victorycard import Victorycard
+from Cardtypes.Victorycard import Victorycard
 
 
 class Province(Victorycard):

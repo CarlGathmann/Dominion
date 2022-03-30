@@ -11,5 +11,5 @@ class Actioncard(Card):
         self.buys = buys
         self.money = money
 
-    def specialAction(self):
+    def specialAction(self, hand):
         pass

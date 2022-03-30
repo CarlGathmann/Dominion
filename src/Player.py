@@ -1,6 +1,10 @@
 import random
-import Card
-from Cardtype.Actioncard import Actioncard
+
+import AllCards
+from Card import Card
+from Actioncards.Chapel import Chapel
+from Cardtypes.Actioncard import Actioncard
+from Cardtypes.Moneycard import Moneycard
 from Moneycards.Copper import Copper
 from Victorycards.Estate import Estate
 
@@ -14,6 +18,7 @@ class Player:
         self.hand = []
         self.drawingPile = []
         self.discardingPile = []
+        self.played_and_bought_cards = []
         self.createDeck()
         self.draw(5)
 
@@ -22,11 +27,12 @@ class Player:
             self.drawingPile.append(Estate())
         for i in range(7):
             self.drawingPile.append(Copper())
+        self.drawingPile.append(Chapel())
         random.shuffle(self.drawingPile)
 
     def draw(self, cards: int):
         for i in range(cards):
-            card = self.drawingPile.pop(i)
+            card = self.drawingPile.pop()
             self.hand.append(card)
 
     def printDeck(self):
@@ -38,9 +44,16 @@ class Player:
             print(card)
 
     def takeTurn(self):
+        # ACTIONPHASE
+        self.playActions()
+        # BUYPHASE
+        self.buyCards()
+        # LAY DOWN CARDS
+        self.dicardCards()
+
+    def playActions(self):
         self.actions = 1
         self.buys = 1
-        # ACTIONPHASE
         while self.actions > 0:
             actioncards = self.getActionInHand()
             if len(actioncards) > 0:
@@ -50,9 +63,23 @@ class Player:
                 self.actions -= 1
             else:
                 self.actions = 0
-        # BUYPHASE
 
-    def playCard(self, card: Card):
+    def buyCards(self):
+        possible_buys = self.getPossibleBuys()
+        print(possible_buys)
+        self.buy(random.choice(possible_buys))
+
+    def getPossibleBuys(self):
+        self.getMoneyInHand()
+        possible_buys = []
+        self.printAttributes()
+        for option in AllCards.cardlist.keys():
+            if self.money >= option:
+                possible_buys += AllCards.cardlist[option]
+        return possible_buys
+
+    def playCard(self, card: Actioncard):
+        print("playing: ", card.__str__())
         self.hand.remove(card)
         self.actions += card.actions
         self.buys += card.buys
@@ -61,6 +88,7 @@ class Player:
             drawncard = self.drawingPile.pop()
             self.hand.append(drawncard)
             card.cards -= 1
+        card.specialAction(self.hand)
 
     def getActionInHand(self):
         actions = []
@@ -69,5 +97,20 @@ class Player:
                 actions.append(card)
         return actions
 
+    def getMoneyInHand(self):
+        for card in self.hand:
+            if isinstance(card, Moneycard):
+                self.money += card.money
+
     def printAttributes(self):
         print("Actions: %s, Buys: %s, Money: %s" % (self.actions, self.buys, self.money))
+
+    def buy(self, card: Card):
+        self.money -= card.expences
+        self.buys -= 1
+        print("Buying:", card)
+
+    def dicardCards(self):
+        self.discardingPile += self.hand
+        self.discardingPile += self.played_and_bought_cards
+        self.hand.clear()
