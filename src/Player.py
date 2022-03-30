@@ -1,13 +1,16 @@
 import random
+import Card
 
 from Moneycards.Copper import Copper
 from Victorycards.Estate import Estate
-from random import shuffle
-
+from Cardtype.Actioncard import Actioncard
 
 class Player:
 
     def __init__(self):
+        self.money = 0
+        self.buys = 0
+        self.actions = 0
         self.hand = []
         self.drawingPile = []
         self.discardingPile = []
@@ -33,3 +36,38 @@ class Player:
         print("Drawing Pile:")
         for card in self.drawingPile:
             print(card)
+
+    def takeTurn(self):
+        self.actions = 1
+        self.buys = 1
+        # ACTIONPHASE
+        while self.actions > 0:
+            actioncards = self.getActionInHand()
+            if len(actioncards) > 0:
+                choice = random.choice(actioncards)
+                self.playCard(choice)
+                actioncards.remove(choice)
+                self.actions -= 1
+            else:
+                self.actions = 0
+        # BUYPHASE
+            
+    def playCard(self, card: Card):
+        self.hand.remove(card)
+        self.actions += card.actions
+        self.buys += card.buys
+        self.money += card.money
+        while card.cards > 0:
+            drawncard = self.drawingPile.pop()
+            self.hand.append(drawncard)
+            card.cards -= 1
+
+    def getActionInHand(self):
+        actions = []
+        for card in self.hand:
+            if isinstance(card, Actioncard):
+                actions.append(card)
+        return actions
+
+    def printAttributes(self):
+        print("Actions: %s, Buys: %s, Money: %s" % (self.actions, self.buys, self.money))
