@@ -9,7 +9,7 @@ class Chapel(Actioncard):
 
     def specialAction(self, player):
         # choose random cards to trash
-        cards_to_trash = random.randint(0, 4)
+        cards_to_trash = random.randrange(0, len(player.hand) or 4, 1)
         print("Trashing", cards_to_trash, "cards...")
         for card in range(cards_to_trash):
             player.hand.remove(random.choice(player.hand))
