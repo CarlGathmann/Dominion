@@ -42,6 +42,8 @@ class Player:
     def playActions(self):
         while self.actions > 0:
             actioncards = self.getActionInHand()
+            if len(actioncards) == 0:
+                break
             for card in actioncards:
                 choice = random.choice(actioncards)
                 self.playCard(choice)
@@ -108,10 +110,10 @@ class Player:
         if cards != 0:
             print("Drawing", cards, "cards...")
         for i in range(cards):
-            try:
+            if len(self.drawingPile) != 0:
                 card = self.drawingPile.pop()
                 self.hand.append(card)
-            except IndexError:
+            else:
                 self.drawingPile += self.discardingPile
                 self.discardingPile.clear()
                 random.shuffle(self.drawingPile)
@@ -133,6 +135,8 @@ class Player:
         choices = []
         for card in range(x):
             choice = random.choice(self.hand)
+            while choice in choices:
+                choice = random.choice(self.hand)
             choices.append(choice)
         return choices
 
