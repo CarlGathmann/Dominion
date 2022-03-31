@@ -1,4 +1,3 @@
-from Actioncards.Market import Market
 from Cardtypes.Actioncard import Actioncard
 
 
@@ -7,7 +6,6 @@ class Vassal(Actioncard):
         super(Vassal, self).__init__(0, 0, 0, 2, 3)
 
     def specialAction(self, player):
-        player.drawingPile.append(Market())
         card = player.drawAndReturn()
         if isinstance(card, Actioncard):
             print("playing", card, "with Vassal")

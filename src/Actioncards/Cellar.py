@@ -10,5 +10,5 @@ class Cellar(Actioncard):
     def specialAction(self, player):
         amount_cards = random.randint(0, len(player.hand))
         choices = player.chooseXCardsFromHand(amount_cards)
-        player.dicardAmountOfCards(choices)
+        player.dicardListOfCards(choices)
         player.draw(amount_cards)

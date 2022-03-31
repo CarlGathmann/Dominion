@@ -1,7 +1,6 @@
 import random
 
 import AllCards
-from Actioncards.Vassal import Vassal
 from Cardtypes.Actioncard import Actioncard
 from Cardtypes.Moneycard import Moneycard
 from Moneycards.Copper import Copper
@@ -10,7 +9,8 @@ from Victorycards.Estate import Estate
 
 class Player:
 
-    def __init__(self):
+    def __init__(self, name):
+        self.name = name
         self.money = 0
         self.buys = 0
         self.actions = 0
@@ -19,7 +19,6 @@ class Player:
         self.discardingPile = []
         self.played_cards = []
         self.createDeck()
-        self.hand.append(Vassal())
 
     def takeTurn(self):
         # PREP
@@ -144,24 +143,23 @@ class Player:
         self.played_cards.clear()
         self.hand.clear()
 
-    def dicardAmountOfCards(self, cards):
+    def dicardListOfCards(self, cards):
         print("Discarding", len(cards), "cards...")
         for card in cards:
             self.discardingPile.append(card)
             self.hand.remove(card)
 
+    # Sehr weird alles
     def chooseXCardsFromHand(self, x):
-        choices = []
-        for card in range(x):
-            choice = random.choice(self.hand)
-            if choice not in choices:
-                choices.append(choice)
+        choices = random.sample(self.hand, x)
         return choices
 
     def printAttributes(self):
-        print("Actions: %s, Buys: %s, Money: %s, Handkarten: %s, Alle Karten: %s" % (
-        self.actions, self.buys, self.money, len(self.hand),
-        len(self.hand + self.drawingPile + self.discardingPile + self.played_cards)))
+        print(
+            "Actions: %s, Buys: %s, Money: %s, Handkarten: %s, Alle Karten: %s"
+            % (self.actions, self.buys, self.money, len(self.hand),
+               len(self.hand + self.drawingPile + self.discardingPile + self.played_cards))
+        )
 
     def printDeck(self):
         print("Hand:")

@@ -7,9 +7,9 @@ class Merchant(Actioncard):
         super().__init__(1, 1, 0, 0, 3)
 
     def specialAction(self, player):
-        counter = 0
+        silver = False
         for moneycard in player.getMoneycardsInHand():
-            if counter == 0:
+            if not silver:
                 if moneycard.__class__ == Silver:
                     player.money += 1
-                    counter += 1
+                    silver = True
