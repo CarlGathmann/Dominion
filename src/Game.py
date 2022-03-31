@@ -6,5 +6,5 @@ class Game:
 
     def nextTurn(self):
         for player in self.players:
-            for i in range(7):
+            for i in range(1):
                 player.takeTurn()

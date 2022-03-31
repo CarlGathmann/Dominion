@@ -9,7 +9,6 @@ class Cellar(Actioncard):
 
     def specialAction(self, player):
         amount_cards = random.randint(0, len(player.hand))
-        print("Discarding", amount_cards, "cards...")
-        choice = player.chooseXCardsFromHand(amount_cards)
-        player.dicardAmountOfCards(choice)
+        choices = player.chooseXCardsFromHand(amount_cards)
+        player.dicardAmountOfCards(choices)
         player.draw(amount_cards)

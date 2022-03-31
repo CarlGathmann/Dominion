@@ -1,7 +1,7 @@
 import random
 
 import AllCards
-from Card import Card
+from Actioncards.Vassal import Vassal
 from Cardtypes.Actioncard import Actioncard
 from Cardtypes.Moneycard import Moneycard
 from Moneycards.Copper import Copper
@@ -19,6 +19,7 @@ class Player:
         self.discardingPile = []
         self.played_cards = []
         self.createDeck()
+        self.hand.append(Vassal())
 
     def takeTurn(self):
         # PREP
@@ -27,24 +28,20 @@ class Player:
         self.money = 0
         self.draw(5)
         # ACTIONPHASE
-        self.printDeck()
+        print("# ACTIONPHASE")
         self.playActions()
-        self.printAttributes()
         # BUYPHASE
+        print("# BUYPHASE")
         self.buyCards()
-        self.printAttributes()
         # DISCARD CARDS
         self.dicardAllCards()
 
     def playActions(self):
         while self.actions > 0:
-            actioncards = self.getActionInHand()
-            if len(actioncards) != 0:
-                for card in actioncards:
-                    choice = random.choice(actioncards)
-                    self.playActioncard(choice)
-                    actioncards.remove(choice)
-                    self.actions -= 1
+            if len(self.getActionInHand()) != 0:
+                choice = random.choice(self.getActionInHand())
+                self.playActioncardInHand(choice)
+                self.actions -= 1
             else:
                 break
 
@@ -66,10 +63,18 @@ class Player:
         self.played_cards.append(card)
         self.money += card.money
 
-    def playActioncard(self, card: Actioncard):
+    def playActioncardInHand(self, card: Actioncard):
         print("playing: ", card.__str__())
         self.hand.remove(card)
         self.played_cards.append(card)
+        self.actions += card.actions
+        self.buys += card.buys
+        self.money += card.money
+        self.draw(card.cards)
+        card.specialAction(self)
+
+    def playActioncard(self, card: Actioncard):
+        print("playing: ", card.__str__())
         self.actions += card.actions
         self.buys += card.buys
         self.money += card.money
@@ -111,20 +116,36 @@ class Player:
             if len(self.drawingPile) != 0:
                 card = self.drawingPile.pop()
                 self.hand.append(card)
-            else:
+            elif len(self.discardingPile) != 0:
                 self.drawingPile += self.discardingPile
                 self.discardingPile.clear()
                 random.shuffle(self.drawingPile)
-
                 card = self.drawingPile.pop()
                 self.hand.append(card)
+            else:
+                print("No cards to draw")
+                break
+
+    def drawAndReturn(self):
+        if len(self.drawingPile) != 0:
+            return self.drawingPile.pop()
+        elif len(self.discardingPile) != 0:
+            self.drawingPile += self.discardingPile
+            self.discardingPile.clear()
+            random.shuffle(self.drawingPile)
+            return self.drawingPile.pop()
+        else:
+            print("No cards to draw")
+            return None
 
     def dicardAllCards(self):
         self.discardingPile += self.hand
         self.discardingPile += self.played_cards
+        self.played_cards.clear()
         self.hand.clear()
 
     def dicardAmountOfCards(self, cards):
+        print("Discarding", len(cards), "cards...")
         for card in cards:
             self.discardingPile.append(card)
             self.hand.remove(card)
@@ -133,13 +154,14 @@ class Player:
         choices = []
         for card in range(x):
             choice = random.choice(self.hand)
-            while choice in choices:
-                choice = random.choice(self.hand)
-            choices.append(choice)
+            if choice not in choices:
+                choices.append(choice)
         return choices
 
     def printAttributes(self):
-        print("Actions: %s, Buys: %s, Money: %s" % (self.actions, self.buys, self.money))
+        print("Actions: %s, Buys: %s, Money: %s, Handkarten: %s, Alle Karten: %s" % (
+        self.actions, self.buys, self.money, len(self.hand),
+        len(self.hand + self.drawingPile + self.discardingPile + self.played_cards)))
 
     def printDeck(self):
         print("Hand:")
