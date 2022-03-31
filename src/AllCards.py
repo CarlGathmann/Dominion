@@ -1,3 +1,4 @@
+from Actioncards.Cellar import Cellar
 from Actioncards.Chapel import Chapel
 from Actioncards.Festival import Festival
 from Actioncards.Market import Market
@@ -11,7 +12,7 @@ from Victorycards.Curse import Curse
 cardlist = {
         0: [Copper(), Curse()],
         1: [],
-        2: [Chapel()],
+        2: [Chapel(), Cellar()],
         3: [Village(), Silver()],
         4: [Smithy()],
         5: [Market(), Festival()],
