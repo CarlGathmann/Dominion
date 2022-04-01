@@ -1,10 +1,11 @@
-from Game import Game
-from Player import Player
+import random
+
+from src.Game import Game
+from src.Player import Player
 
 if __name__ == '__main__':
     # INIT: create Players
-    playerOne = Player("ONE")
-    playerTwo = Player("TWO")
-    game = Game([playerOne, playerTwo])
+    game = Game()
 
-    game.nextTurn()
+    for _ in range(5):
+        game.nextRound()

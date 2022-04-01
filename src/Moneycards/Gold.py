@@ -1,4 +1,4 @@
-from Cardtypes.Moneycard import Moneycard
+from src.Cardtypes.Moneycard import Moneycard
 
 
 class Gold(Moneycard):

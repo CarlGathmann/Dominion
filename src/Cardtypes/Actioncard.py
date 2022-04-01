@@ -1,4 +1,4 @@
-from Card import Card
+from src.Card import Card
 
 
 class Actioncard(Card):
@@ -11,5 +11,5 @@ class Actioncard(Card):
         self.buys = buys
         self.money = money
 
-    def specialAction(self, player):
+    def specialAction(self, player, game):
         pass

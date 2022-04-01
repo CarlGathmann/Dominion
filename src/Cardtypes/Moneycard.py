@@ -1,4 +1,4 @@
-from Card import Card
+from src.Card import Card
 
 
 class Moneycard(Card):

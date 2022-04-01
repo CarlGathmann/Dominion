@@ -1,4 +1,4 @@
-from Cardtypes.Victorycard import Victorycard
+from src.Cardtypes.Victorycard import Victorycard
 
 
 class Estate(Victorycard):
