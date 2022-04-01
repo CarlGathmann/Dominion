@@ -7,4 +7,4 @@ class Moat(Actioncard):
 
     # if Moat is in Hand player cant be attacked
     def specialAction(self, player, game):
-        player.CanBeAttacked(False)
+        player.CanBeAttacked = False

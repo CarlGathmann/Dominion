@@ -1,4 +1,5 @@
 from src.Cardtypes.Actioncard import Actioncard
+from src.Cardtypes.Victorycard import Victorycard
 
 
 class Bureaucrat(Actioncard):
@@ -11,6 +12,9 @@ class Bureaucrat(Actioncard):
             if player.canBeAttacked:
                 counter = 0
                 for card in player.hand:
-                    if isinstance(card, Actioncard) and counter == 0:
+                    if isinstance(card, Victorycard) and counter == 0:
+                        print(player, ' has to discard a card')
+                        print(card)
                         player.drawingPile.append(card)
                         player.hand.remove(card)
+                        counter += 1

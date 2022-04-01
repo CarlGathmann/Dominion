@@ -1,7 +1,7 @@
 import random
 
 from src.Actioncards import Cellar, Chapel, Festival, Harbinger, Market, Merchant, Militia, Moneylender, Smithy, Vassal, \
-    Village, Workshop, Moat, Bureaucrat
+    Village, Workshop, Moat, Bureaucrat, ThroneRoom
 from src.Moneycards import Copper, Silver, Gold
 from src.Player import Player
 from src.Victorycards import Estate, Dutchy, Province, Curse
@@ -16,7 +16,8 @@ def getStandardCards():
 def getSpecialCards():
     special_cards = [Cellar.Cellar(), Chapel.Chapel(), Festival.Festival(), Harbinger.Harbinger(), Market.Market(),
                      Merchant.Merchant(), Militia.Militia(), Moneylender.Moneylender(), Smithy.Smithy(),
-                     Vassal.Vassal(), Village.Village(), Workshop.Workshop(), Moat.Moat(), Bureaucrat.Bureaucrat()]
+                     Vassal.Vassal(), Village.Village(), Workshop.Workshop(), Moat.Moat(), Bureaucrat.Bureaucrat(),
+                     ThroneRoom.ThroneRoom()]
     return special_cards
 
 
@@ -27,11 +28,12 @@ def getAllCards():
 
 def getCardExpences():
     card_expences = {
-        0: [Copper.Copper(), Chapel.Chapel()],
-        2: [Chapel.Chapel(), Cellar.Cellar()],
+        0: [Copper.Copper(), Curse.Curse()],
+        2: [Chapel.Chapel(), Cellar.Cellar(), Moat.Moat()],
         3: [Village.Village(), Silver.Silver(), Merchant.Merchant(), Workshop.Workshop(), Vassal.Vassal(),
             Harbinger.Harbinger()],
-        4: [Smithy.Smithy(), Moneylender.Moneylender(), Militia.Militia()],
+        4: [Smithy.Smithy(), Moneylender.Moneylender(), Militia.Militia(), Bureaucrat.Bureaucrat(),
+            ThroneRoom.ThroneRoom()],
         5: [Market.Market(), Festival.Festival()],
         6: [Gold.Gold()]
     }
