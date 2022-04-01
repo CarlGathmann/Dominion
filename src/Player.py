@@ -1,9 +1,8 @@
 import random
 
+from src.Actioncards.Moat import Moat
 from src.Cardtypes.Actioncard import Actioncard
 from src.Cardtypes.Moneycard import Moneycard
-from src.Moneycards.Copper import Copper
-from src.Victorycards.Estate import Estate
 
 
 class Player:
@@ -24,12 +23,16 @@ class Player:
         self.buys = 1
         self.money = 0
         self.draw(5)
+        self.canBeAttacked = True
+        self.checkForMoat()
         # ACTIONPHASE
         print("# ACTIONPHASE")
         self.playActions(game)
         # BUYPHASE
         print("# BUYPHASE")
+        self.printAttributes()
         self.buyCards(game)
+
         # DISCARD CARDS
         self.dicardAllCards()
 
@@ -47,11 +50,15 @@ class Player:
             self.playMoneycard(card)
         while self.buys > 0:
             possible_buys = self.getPossibleBuys(game)
-            choice = random.choice(possible_buys)
-            self.played_cards.append(choice)
-            self.money -= choice.expences
-            self.buys -= 1
-            print("Buying:", choice)
+            if len(possible_buys) > 0:
+                choice = random.choice(possible_buys)
+                self.discardingPile.append(game.getCardFromPile(choice))
+                self.money -= choice.expences
+                self.buys -= 1
+                print("Buying:", choice)
+            else:
+                print("can't buy anything")
+                self.buys = 0
 
     def playMoneycard(self, card: Moneycard):
         print("playing: ", card.__str__())
@@ -93,15 +100,15 @@ class Player:
 
     def getPossibleBuys(self, game):
         possible_buys = []
-        for option in game.card_expences.keys():
-            if self.money >= option:
-                possible_buys += game.card_expences[option]
+        for key in game.gameCards.keys():
+            if game.gameCards[key][0].expences <= self.money:
+                possible_buys.append(game.gameCards[key][0])
         return possible_buys
 
-    def draw(self, cards: int):
-        if cards != 0:
-            print("Drawing", cards, "cards...")
-        for i in range(cards):
+    def draw(self, amount: int):
+        if amount != 0:
+            print("Drawing", amount, "cards...")
+        for i in range(amount):
             if len(self.drawingPile) != 0:
                 card = self.drawingPile.pop()
                 self.hand.append(card)
@@ -142,6 +149,11 @@ class Player:
     def chooseXCardsFromHand(self, x):
         choices = random.sample(self.hand, x)
         return choices
+
+    def checkForMoat(self):
+        for card in self.hand:
+            if card.__class__ == Moat():
+                self.canBeAttacked = False
 
     def printAttributes(self):
         print(

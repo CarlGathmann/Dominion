@@ -1,9 +1,6 @@
-import random
-
 from src.Game import Game
-from src.Player import Player
 
-ROUNDS = 50
+ROUNDS = 1000
 
 if __name__ == '__main__':
     # INIT: create Players
@@ -11,3 +8,4 @@ if __name__ == '__main__':
 
     for _ in range(ROUNDS):
         game.nextRound()
+        print(len(game.gameCards.keys()))

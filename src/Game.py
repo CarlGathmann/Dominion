@@ -1,7 +1,7 @@
 import random
 
 from src.Actioncards import Cellar, Chapel, Festival, Harbinger, Market, Merchant, Militia, Moneylender, Smithy, Vassal, \
-    Village, Workshop, Moat, Bureaucrat, ThroneRoom
+    Village, Workshop, Moat, Bureaucrat, ThroneRoom, Remodel, Poacher, Bandit, Laboratory
 from src.Moneycards import Copper, Silver, Gold
 from src.Player import Player
 from src.Victorycards import Estate, Dutchy, Province, Curse
@@ -17,7 +17,8 @@ def getSpecialCards():
     special_cards = [Cellar.Cellar(), Chapel.Chapel(), Festival.Festival(), Harbinger.Harbinger(), Market.Market(),
                      Merchant.Merchant(), Militia.Militia(), Moneylender.Moneylender(), Smithy.Smithy(),
                      Vassal.Vassal(), Village.Village(), Workshop.Workshop(), Moat.Moat(), Bureaucrat.Bureaucrat(),
-                     ThroneRoom.ThroneRoom()]
+                     ThroneRoom.ThroneRoom(), Remodel.Remodel(), Poacher.Poacher(), Bandit.Bandit(),
+                     Laboratory.Laboratory()]
     return special_cards
 
 
@@ -33,8 +34,8 @@ def getCardExpences():
         3: [Village.Village(), Silver.Silver(), Merchant.Merchant(), Workshop.Workshop(), Vassal.Vassal(),
             Harbinger.Harbinger()],
         4: [Smithy.Smithy(), Moneylender.Moneylender(), Militia.Militia(), Bureaucrat.Bureaucrat(),
-            ThroneRoom.ThroneRoom()],
-        5: [Market.Market(), Festival.Festival()],
+            ThroneRoom.ThroneRoom(), Remodel.Remodel(), Poacher.Poacher()],
+        5: [Market.Market(), Festival.Festival(), Bandit.Bandit(), Laboratory.Laboratory()],
         6: [Gold.Gold()]
     }
     return card_expences
@@ -45,7 +46,7 @@ class Game:
 
     def __init__(self):
         self.gameOver = False
-        self.players = [Player() for _ in range(random.randint(2, 6))]
+        self.players = [Player() for _ in range(random.randint(2, 2))]
         self.garbidge = []
         self.gameCards = {}
         self.card_expences = {}
@@ -76,6 +77,14 @@ class Game:
         for card in chosen_cards:
             self.gameCards[str(card.__str__())] = [card for _ in range(10)]
 
+    def getCardFromPile(self, wanted_card):
+        if len(self.gameCards[wanted_card.__str__()]) > 1:
+            return self.gameCards[wanted_card.__str__()].pop()
+        elif len(self.gameCards[wanted_card.__str__()]) == 1:
+            card = self.gameCards[wanted_card.__str__()].pop()
+            del self.gameCards[wanted_card.__str__()]
+            return card
+
     def createStandardCards(self):
         # Money cards (Copper, Silver, Gold)
         self.gameCards["Copper"] = [Copper.Copper() for _ in range(60)]
@@ -86,13 +95,13 @@ class Game:
             self.gameCards["Estate"] = [Estate.Estate() for _ in range(8 + len(self.players) * 3)]
             self.gameCards["Dutchy"] = [Dutchy.Dutchy() for _ in range(8)]
             self.gameCards["Province"] = [Province.Province() for _ in range(8)]
+            self.gameCards["Curse"] = [Curse.Curse() for _ in range(10)]
 
         # Victorypoints for Three and Four Players (Estate, Dutchy, Province)
         elif len(self.players) == 3 or len(self.players) == 4:
             self.gameCards["Estate"] = [Estate.Estate() for _ in range(12 + len(self.players) * 3)]
             self.gameCards["Dutchy"] = [Dutchy.Dutchy() for _ in range(12)]
             self.gameCards["Province"] = [Province.Province() for _ in range(12)]
-            self.gameCards["Curse"] = [Curse.Curse() for _ in range(10)]
             if len(self.players) == 5:
                 self.gameCards["Province"] = [Province.Province() for _ in range(12)]
                 self.gameCards["Curse"] = [Curse.Curse() for _ in range(20)]
