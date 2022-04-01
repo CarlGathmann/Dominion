@@ -7,7 +7,8 @@ class Militia(Actioncard):
 
     # Every other Player discards down to 3 cards in hand
     def specialAction(self, player, game):
-        for p in game.players:
-            if p != player:
-                while len(p.hand) > 3:
-                    p.discard.append(p.hand.pop(0))
+        if player.canBeAttacked:
+            for p in game.players:
+                if p != player:
+                    while len(p.hand) > 3:
+                        p.discard.append(p.hand.pop(0))

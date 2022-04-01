@@ -12,11 +12,11 @@ class Player:
         self.money = 0
         self.buys = 0
         self.actions = 0
+        self.canBeAttacked = True
         self.hand = []
         self.drawingPile = []
         self.discardingPile = []
         self.played_cards = []
-        self.createDeck()
 
     def takeTurn(self, game):
         # PREP
@@ -94,17 +94,9 @@ class Player:
     def getPossibleBuys(self, game):
         possible_buys = []
         for option in game.card_expences.keys():
-            print((option, game.card_expences[option]))
             if self.money >= option:
                 possible_buys += game.card_expences[option]
         return possible_buys
-
-    def createDeck(self):
-        for i in range(3):
-            self.drawingPile.append(Estate())
-        for i in range(7):
-            self.drawingPile.append(Copper())
-        random.shuffle(self.drawingPile)
 
     def draw(self, cards: int):
         if cards != 0:
