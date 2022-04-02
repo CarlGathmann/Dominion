@@ -4,6 +4,8 @@ from src.Actioncards.Moat import Moat
 from src.Cardtypes.Actioncard import Actioncard
 from src.Cardtypes.Moneycard import Moneycard
 from src.Cardtypes.Victorycard import Victorycard
+from src.Moneycards.Copper import Copper
+from src.Victorycards.Estate import Estate
 
 
 class Player:
@@ -19,7 +21,6 @@ class Player:
         self.drawingPile = []
         self.discardingPile = []
         self.played_cards = []
-        self.draw(5)
 
     def takeTurn(self, game):
         # PREP
@@ -135,6 +136,14 @@ class Player:
         self.drawingPile += self.discardingPile
         self.discardingPile.clear()
         random.shuffle(self.drawingPile)
+
+    def createDeck(self, game):
+        print("\n Creating Deck for player %s..." % self.name)
+        for _ in range(7):
+            self.drawingPile.append(game.gameCards.get(str(Copper())).pop())
+        for _ in range(3):
+            self.drawingPile.append(game.gameCards.get(str(Estate())).pop())
+        self.shuffle()
 
     def discardFromHand(self, card):
         self.hand.remove(card)

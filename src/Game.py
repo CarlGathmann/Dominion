@@ -48,13 +48,12 @@ class Game:
 
     def __init__(self):
         self.gameOver = False
-        self.players = [Player(str(i)) for i in range(1, random.randint(3, 7))]
-        print(len(self.players))
         self.garbidge = []
         self.gameCards = {}
         self.card_expences = {}
         self.round = 1
         self.card_expences = getCardExpences()
+        self.players = [Player(str(i)) for i in range(1, random.randint(3, 7))]
         self.createStandardCards()
         self.createSpecialCards()
         self.createDecks()
@@ -64,7 +63,7 @@ class Game:
         print(("Round: " + str(self.round)).upper())
         counter = 1
         for player in self.players:
-            print(('\n %s_%s takes his turn:' % (player, counter)).upper())
+            print('\n', player.name, 'takes his turn:'.upper())
             player.takeTurn(self)
             counter += 1
         if len(self.gameCards) <= 14:
@@ -85,14 +84,6 @@ class Game:
         for player in self.players:
             print(player.name)
 
-    def createDecks(self):
-        print("Creating Decks... \n")
-        for player in self.players:
-            for _ in range(7):
-                player.drawingPile.append(self.gameCards.get(str(Copper.Copper())).pop())
-            for _ in range(3):
-                player.drawingPile.append(self.gameCards.get(str(Estate.Estate())).pop())
-
     def createSpecialCards(self):
         chosen_cards = random.sample(getSpecialCards(), 10)
         # Garden has to be added here because it is not in the getSpecialCards() list
@@ -106,6 +97,11 @@ class Game:
             card = self.gameCards[wanted_card.__str__()].pop()
             del self.gameCards[wanted_card.__str__()]
             return card
+
+    def createDecks(self):
+        for player in self.players:
+            player.createDeck(self)
+            player.draw(5)
 
     def createStandardCards(self):
         # Money cards (Copper, Silver, Gold)
