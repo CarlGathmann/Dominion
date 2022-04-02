@@ -1,3 +1,5 @@
+import random
+
 from src.Cardtypes.Actioncard import Actioncard
 
 
@@ -11,6 +13,8 @@ class Militia(Actioncard):
             for p in game.players:
                 if p != player:
                     while len(p.hand) > 3:
-                        p.discardFromHand.append(p.hand.pop(0))
+                        choice = random.choice(p.hand)
+                        p.discardFromHand(choice)
+                        print(p.name, 'discarding', choice)
         else:
             print(player, 'reacts with a Moat')

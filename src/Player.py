@@ -3,19 +3,23 @@ import random
 from src.Actioncards.Moat import Moat
 from src.Cardtypes.Actioncard import Actioncard
 from src.Cardtypes.Moneycard import Moneycard
+from src.Cardtypes.Victorycard import Victorycard
 
 
 class Player:
 
-    def __init__(self):
+    def __init__(self, name):
+        self.name = 'Player_' + name
         self.money = 0
         self.buys = 0
         self.actions = 0
+        self.victorypoints = 0
         self.canBeAttacked = True
         self.hand = []
         self.drawingPile = []
         self.discardingPile = []
         self.played_cards = []
+        self.draw(5)
 
     def takeTurn(self, game):
         # PREP
@@ -23,7 +27,6 @@ class Player:
         self.buys = 1
         self.money = 0
         self.canBeAttacked = True
-        self.draw(5)
         # ACTIONPHASE
         print("# ACTIONPHASE")
         self.playActions(game)
@@ -34,6 +37,8 @@ class Player:
 
         # DISCARD CARDS
         self.dicardAllCards()
+
+        self.draw(5)
 
     def playActions(self, game):
         while self.actions > 0:
@@ -51,6 +56,8 @@ class Player:
             possible_buys = self.getPossibleBuys(game)
             if len(possible_buys) > 0:
                 choice = random.choice(possible_buys)
+                if isinstance(choice, Victorycard):
+                    self.victorypoints += choice.victorypoints
                 self.discardingPile.append(game.getCardFromPile(choice))
                 self.money -= choice.expences
                 self.buys -= 1
@@ -173,3 +180,6 @@ class Player:
         print("Drawing Pile:")
         for card in self.drawingPile:
             print(card)
+
+    def __str__(self):
+        return str(self.__class__).split(".")[-1].strip("'>")

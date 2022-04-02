@@ -48,7 +48,8 @@ class Game:
 
     def __init__(self):
         self.gameOver = False
-        self.players = [Player() for _ in range(random.randint(2, 2))]
+        self.players = [Player(str(i)) for i in range(1, random.randint(3, 7))]
+        print(len(self.players))
         self.garbidge = []
         self.gameCards = {}
         self.card_expences = {}
@@ -60,10 +61,29 @@ class Game:
 
     def nextRound(self):
         print("")
-        print("Round: " + str(self.round))
+        print(("Round: " + str(self.round)).upper())
+        counter = 1
         for player in self.players:
+            print(('\n %s_%s takes his turn:' % (player, counter)).upper())
             player.takeTurn(self)
+            counter += 1
+        if len(self.gameCards) <= 14:
+            self.gameOver = True
+            print("Tree drawing piles are empty")
+        elif len(self.gameCards['Province']) == 0:
+            print("No Provinces left")
+            self.gameOver = True
         self.round += 1
+
+    def printResults(self):
+        print(('\n results after %s rounds are:' % self.round).upper())
+        for player in self.players:
+            print(player.name, 'has', player.victorypoints, 'Victorypoints')
+        self.players.sort(key=lambda p: p.victorypoints, reverse=True)
+        print(('\n The winner is %s_%s' % (self.players[0], self.players[0].name)).upper())
+        print('\n Podium:'.upper())
+        for player in self.players:
+            print(player.name)
 
     def createDecks(self):
         print("Creating Decks... \n")

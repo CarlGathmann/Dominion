@@ -1,10 +1,11 @@
+from src.Cardtypes.Victorycard import Victorycard
 from src.Game import Game
-
-ROUNDS = 1000
 
 if __name__ == '__main__':
     # INIT: create Players
     game = Game()
 
-    for _ in range(ROUNDS):
+    while not game.gameOver:
         game.nextRound()
+
+    game.printResults()
