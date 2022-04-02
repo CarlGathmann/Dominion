@@ -10,3 +10,5 @@ class Witch(Actioncard):
         for p in game.players:
             if p.canBeAttacked:
                 p.discardingPile.append(game.getCardFromPile(Curse()))
+            else:
+                print(p, 'reacts with a Moat')

@@ -22,9 +22,8 @@ class Player:
         self.actions = 1
         self.buys = 1
         self.money = 0
-        self.draw(5)
         self.canBeAttacked = True
-        self.checkForMoat()
+        self.draw(5)
         # ACTIONPHASE
         print("# ACTIONPHASE")
         self.playActions(game)
@@ -108,27 +107,37 @@ class Player:
     def draw(self, amount: int):
         if amount != 0:
             print("Drawing", amount, "cards...")
+
         for i in range(amount):
             if len(self.drawingPile) != 0:
                 card = self.drawingPile.pop()
+                if card.__class__ == Moat:
+                    self.canBeAttacked = False
                 self.hand.append(card)
             elif len(self.discardingPile) != 0:
-                self.drawingPile += self.discardingPile
-                self.discardingPile.clear()
-                random.shuffle(self.drawingPile)
+                self.shuffle()
                 card = self.drawingPile.pop()
+                if card.__class__ == Moat:
+                    self.canBeAttacked = False
                 self.hand.append(card)
             else:
                 print("No cards to draw")
                 break
 
+    def shuffle(self):
+        self.drawingPile += self.discardingPile
+        self.discardingPile.clear()
+        random.shuffle(self.drawingPile)
+
+    def discardFromHand(self, card):
+        self.hand.remove(card)
+        self.discardingPile.append(card)
+
     def drawAndReturn(self):
         if len(self.drawingPile) != 0:
             return self.drawingPile.pop()
         elif len(self.discardingPile) != 0:
-            self.drawingPile += self.discardingPile
-            self.discardingPile.clear()
-            random.shuffle(self.drawingPile)
+            self.shuffle()
             return self.drawingPile.pop()
         else:
             print("No cards to draw")
@@ -149,11 +158,6 @@ class Player:
     def chooseXCardsFromHand(self, x):
         choices = random.sample(self.hand, x)
         return choices
-
-    def checkForMoat(self):
-        for card in self.hand:
-            if card.__class__ == Moat():
-                self.canBeAttacked = False
 
     def printAttributes(self):
         print(

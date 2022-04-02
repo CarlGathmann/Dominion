@@ -11,4 +11,6 @@ class Militia(Actioncard):
             for p in game.players:
                 if p != player:
                     while len(p.hand) > 3:
-                        p.discard.append(p.hand.pop(0))
+                        p.discardFromHand.append(p.hand.pop(0))
+        else:
+            print(player, 'reacts with a Moat')

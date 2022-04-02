@@ -26,4 +26,5 @@ class Bandit(Actioncard):
                     else:
                         print("discarding ", card)
                         player.discardingPile.append(card)
-            return
+            else:
+                print(player, 'reacts with a Moat')

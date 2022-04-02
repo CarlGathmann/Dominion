@@ -8,4 +8,3 @@ if __name__ == '__main__':
 
     for _ in range(ROUNDS):
         game.nextRound()
-        print(len(game.gameCards.keys()))

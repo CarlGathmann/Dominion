@@ -10,7 +10,7 @@ class Bureaucrat(Actioncard):
     def specialAction(self, player, game):
         try:
             player.drawingPile.append(game.getCardFromPile(Silver()))
-        except:
+        except KeyError:
             print("No Silver left")
         for player in game.players:
             if player.canBeAttacked:
@@ -21,3 +21,5 @@ class Bureaucrat(Actioncard):
                         player.drawingPile.append(card)
                         player.hand.remove(card)
                         counter += 1
+            else:
+                print(player, 'reacts with a Moat')

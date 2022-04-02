@@ -9,9 +9,12 @@ class Workshop(Actioncard):
 
     def specialAction(self, player, game):
         possible_cards = []
-        for option in game.card_expences.keys():
-            if option <= 4:
-                possible_cards += game.card_expences[option]
-        choice = random.choice(possible_cards)
-        player.discardingPile.append(choice)
-        print("Taking", choice)
+        for key in game.gameCards.keys():
+            if game.gameCards[key][0].expences <= 4:
+                possible_cards.append(game.gameCards[key][0])
+        if len(possible_cards) > 0:
+            choice = random.choice(possible_cards)
+            player.discardingPile.append(game.getCardFromPile(choice))
+            print("Taking", choice)
+        else:
+            print("No cards to take")
