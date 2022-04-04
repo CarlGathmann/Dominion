@@ -1,6 +1,6 @@
 import unittest
-from src.Actioncards.Cellar import Cellar
-from src.Player import Player
+from src.Dominion.Actioncards.Cellar import Cellar
+from src.Dominion.Player import Player
 
 
 class TestCellar(unittest.TestCase):
