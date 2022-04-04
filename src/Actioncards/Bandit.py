@@ -17,11 +17,11 @@ class Bandit(Actioncard):
                     card = player.drawAndReturn()
                     if isinstance(card, Moneycard):
                         if card.expences >= 2:
-                            print("trashing ", card)
+                            print(player, "trashing", card)
                             game.garbidge.append(card)
                             return
                         else:
-                            print("discarding ", card)
+                            print(player, "discarding", card)
                             player.discardingPile.append(card)
                     else:
                         print("discarding ", card)
