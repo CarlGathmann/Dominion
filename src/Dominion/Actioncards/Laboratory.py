@@ -2,8 +2,11 @@ from src.Dominion.Cardtypes.Actioncard import Actioncard
 
 
 class Laboratory(Actioncard):
-    def __init__(self):
-        super(Laboratory, self).__init__(2, 1, 0, 0, 5)
+    EXPENCES = 5
+    CARDS = 2
+    ACTIONS = 1
+    BUYS = 0
+    MONEY = 0
 
     def specialAction(self, player, game):
         pass

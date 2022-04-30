@@ -4,8 +4,11 @@ from src.Dominion.Cardtypes.Actioncard import Actioncard
 
 
 class Militia(Actioncard):
-    def __init__(self):
-        super().__init__(0, 0, 0, 2, 4)
+    EXPENCES = 4
+    CARDS = 0
+    ACTIONS = 0
+    BUYS = 0
+    MONEY = 2
 
     # Every other Player discards down to 3 cards in hand
     def specialAction(self, player, game):

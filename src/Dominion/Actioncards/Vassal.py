@@ -2,8 +2,11 @@ from src.Dominion.Cardtypes.Actioncard import Actioncard
 
 
 class Vassal(Actioncard):
-    def __init__(self):
-        super(Vassal, self).__init__(0, 0, 0, 2, 3)
+    EXPENCES = 3
+    CARDS = 0
+    ACTIONS = 0
+    BUYS = 0
+    MONEY = 2
 
     def specialAction(self, player, game):
         card = player.drawAndReturn()

@@ -3,8 +3,11 @@ from src.Dominion.Moneycards.Silver import Silver
 
 
 class Merchant(Actioncard):
-    def __init__(self):
-        super().__init__(1, 1, 0, 0, 3)
+    EXPENCES = 3
+    CARDS = 1
+    ACTIONS = 1
+    BUYS = 0
+    MONEY = 0
 
     def specialAction(self, player, game):
         silver = False

@@ -2,8 +2,11 @@ from src.Dominion.Cardtypes.Actioncard import Actioncard
 
 
 class Village(Actioncard):
-    def __init__(self):
-        super().__init__(1, 2, 0, 0, 3)
+    EXPENCES = 3
+    CARDS = 1
+    ACTIONS = 2
+    BUYS = 0
+    MONEY = 0
 
     def specialAction(self, player, game):
         return

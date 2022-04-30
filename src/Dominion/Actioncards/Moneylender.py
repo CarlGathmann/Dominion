@@ -5,8 +5,11 @@ from src.Dominion.Moneycards.Copper import Copper
 
 
 class Moneylender(Actioncard):
-    def __init__(self):
-        super(Moneylender, self).__init__(0, 0, 0, 0, 4)
+    EXPENCES = 4
+    CARDS = 0
+    ACTIONS = 0
+    BUYS = 0
+    MONEY = 0
 
     def specialAction(self, player, game):
         trashed = False

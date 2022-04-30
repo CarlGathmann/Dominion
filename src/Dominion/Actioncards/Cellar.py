@@ -4,8 +4,11 @@ from src.Dominion.Cardtypes.Actioncard import Actioncard
 
 
 class Cellar(Actioncard):
-    def __init__(self):
-        super().__init__(0, 1, 0, 0, 2)
+    EXPENCES = 2
+    CARDS = 0
+    ACTIONS = 1
+    BUYS = 0
+    MONEY = 0
 
     def specialAction(self, player, game):
         amount_cards = random.randint(0, len(player.hand))

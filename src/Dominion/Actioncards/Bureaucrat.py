@@ -4,8 +4,11 @@ from src.Dominion.Moneycards.Silver import Silver
 
 
 class Bureaucrat(Actioncard):
-    def __init__(self):
-        super().__init__(0, 0, 0, 0, 4)
+    EXPENCES = 4
+    CARDS = 0
+    ACTIONS = 0
+    BUYS = 0
+    MONEY = 0
 
     def specialAction(self, player, game):
         try:

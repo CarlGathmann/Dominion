@@ -4,8 +4,11 @@ from src.Dominion.Cardtypes.Actioncard import Actioncard
 
 
 class Chapel(Actioncard):
-    def __init__(self):
-        super().__init__(0, 0, 0, 0, 2)
+    EXPENCES = 2
+    CARDS = 0
+    ACTIONS = 0
+    BUYS = 0
+    MONEY = 0
 
     def specialAction(self, player, game):
         # choose random cards to trash

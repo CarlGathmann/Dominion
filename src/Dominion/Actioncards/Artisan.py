@@ -4,8 +4,11 @@ from src.Dominion.Cardtypes.Actioncard import Actioncard
 
 
 class Artisan(Actioncard):
-    def __init__(self):
-        super().__init__(0, 0, 0, 0, 6)
+    EXPENCES = 6
+    CARDS = 0
+    ACTIONS = 0
+    BUYS = 0
+    MONEY = 0
 
     def specialAction(self, player, game):
         possible_cards = []

@@ -4,8 +4,11 @@ from src.Dominion.Cardtypes.Actioncard import Actioncard
 
 
 class Library(Actioncard):
-    def __init__(self):
-        super(Library, self).__init__(0, 0, 0, 0, 5)
+    EXPENCES = 5
+    CARDS = 0
+    ACTIONS = 0
+    BUYS = 0
+    MONEY = 0
 
     def specialAction(self, player, game):
         cards_in_hand = len(player.hand)

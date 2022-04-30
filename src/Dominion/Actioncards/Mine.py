@@ -6,8 +6,11 @@ from src.Dominion.Moneycards.Silver import Silver
 
 
 class Mine(Actioncard):
-    def __init__(self):
-        super().__init__(0, 0, 0, 0, 5)
+    EXPENCES = 5
+    CARDS = 0
+    ACTIONS = 0
+    BUYS = 0
+    MONEY = 0
 
     def specialAction(self, player, game):
         money_cards = player.getMoneycardsInHand()

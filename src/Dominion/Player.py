@@ -1,5 +1,6 @@
 import random
 
+from src.Dominion import PlayerLogic
 from src.Dominion.Actioncards.Moat import Moat
 from src.Dominion.Cardtypes.Actioncard import Actioncard
 from src.Dominion.Cardtypes.Moneycard import Moneycard
@@ -21,6 +22,7 @@ class Player:
         self.drawingPile = []
         self.discardingPile = []
         self.played_cards = []
+        self.play_logic : PlayerLogic = None
 
     def takeTurn(self, game):
         # PREP
@@ -43,29 +45,23 @@ class Player:
 
     def playActions(self, game):
         while self.actions > 0:
-            if len(self.getActionInHand()) != 0:
-                choice = random.choice(self.getActionInHand())
-                self.playActioncardInHand(choice, game)
+            chosen_card = self.play_logic.chooseActionCard(self.hand, game.gameCards)
+            # check if card is valid
+            if chosen_card in self.hand:
+                self.playActioncardInHand(chosen_card, game)
                 self.actions -= 1
-            else:
-                break
 
     def buyCards(self, game):
-        for card in self.getMoneycardsInHand():
-            self.playMoneycard(card)
         while self.buys > 0:
-            possible_buys = self.getPossibleBuys(game)
-            if len(possible_buys) > 0:
-                choice = random.choice(possible_buys)
-                if isinstance(choice, Victorycard):
-                    self.victorypoints += choice.victorypoints
+            chosen_card = self.play_logic.buyCard(self.hand, game.gameCards)
+            # check if card is buyable
+            # TODO!
+            if yes:
                 self.discardingPile.append(game.getCardFromPile(choice))
                 self.money -= choice.expences
                 self.buys -= 1
-                print("Buying:", choice)
-            else:
-                print("can't buy anything")
-                self.buys = 0
+
+
 
     def playMoneycard(self, card: Moneycard):
         print("playing: ", card.__str__())

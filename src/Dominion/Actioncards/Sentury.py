@@ -4,8 +4,11 @@ from src.Dominion.Cardtypes.Actioncard import Actioncard
 
 
 class Sentury(Actioncard):
-    def __init__(self):
-        super(Sentury, self).__init__(1, 1, 0, 0, 5)
+    EXPENCES = 5
+    CARDS = 1
+    ACTIONS = 1
+    BUYS = 0
+    MONEY = 0
 
     def specialAction(self, player, game):
         for _ in range(2):

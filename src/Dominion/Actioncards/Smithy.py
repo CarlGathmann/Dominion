@@ -2,8 +2,11 @@ from src.Dominion.Cardtypes.Actioncard import Actioncard
 
 
 class Smithy(Actioncard):
-    def __init__(self):
-        super().__init__(3, 0, 0, 0, 4)
+    EXPENCES = 4
+    CARDS = 3
+    ACTIONS = 0
+    BUYS = 0
+    MONEY = 0
 
     def specialAction(self, player, game):
         return
