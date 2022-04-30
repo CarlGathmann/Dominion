@@ -1,10 +1,9 @@
 import random
 
-from src.Dominion import PlayerLogic
+from src.Dominion.play_logic import PlayerLogic
 from src.Dominion.Actioncards.Moat import Moat
 from src.Dominion.Cardtypes.Actioncard import Actioncard
 from src.Dominion.Cardtypes.Moneycard import Moneycard
-from src.Dominion.Cardtypes.Victorycard import Victorycard
 from src.Dominion.Moneycards.Copper import Copper
 from src.Dominion.Victorycards.Estate import Estate
 
@@ -112,7 +111,7 @@ class Player:
         if amount != 0:
             print("Drawing", amount, "cards...")
 
-        for i in range(amount):
+        for _ in range(amount):
             if len(self.drawingPile) != 0:
                 card = self.drawingPile.pop()
                 if card.__class__ == Moat:

@@ -34,4 +34,4 @@ class Mine(Actioncard):
                 except KeyError:
                     print('no Gold left')
             else:
-                pass
+                return

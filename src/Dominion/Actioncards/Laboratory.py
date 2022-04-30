@@ -9,4 +9,4 @@ class Laboratory(Actioncard):
     MONEY = 0
 
     def specialAction(self, player, game):
-        pass
+        return

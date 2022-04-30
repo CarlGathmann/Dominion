@@ -11,7 +11,7 @@ class Poacher(Actioncard):
     MONEY = 1
 
     def specialAction(self, player, game):
-        for i in range(17 - len(game.gameCards)):
+        for _ in range(17 - len(game.gameCards)):
             if len(player.hand) != 0:
                 choice = random.choice(player.hand)
                 print('discarding', choice)

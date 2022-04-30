@@ -12,8 +12,7 @@ class Merchant(Actioncard):
     def specialAction(self, player, game):
         silver = False
         for moneycard in player.getMoneycardsInHand():
-            if not silver:
-                if moneycard.__class__ == Silver:
-                    print("+1 money from Merchant")
-                    player.money += 1
-                    silver = True
+            if not silver and moneycard.__class__ == Silver:
+                print("+1 money from Merchant")
+                player.money += 1
+                silver = True

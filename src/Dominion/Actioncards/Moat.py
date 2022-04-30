@@ -10,4 +10,4 @@ class Moat(Actioncard):
 
     # Moat is realised in attack cards
     def specialAction(self, player, game):
-        pass
+        return

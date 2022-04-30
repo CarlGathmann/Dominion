@@ -22,8 +22,6 @@ class Artisan(Actioncard):
             player.hand.remove(second_choice)
             player.drawingPile.append(second_choice)
             print("taking", choice, "and topdecking", second_choice)
-            return
 
         else:
             print("no cards to take")
-            return

@@ -17,14 +17,12 @@ class Moneylender(Actioncard):
         if len(money_cards) > 0:
             if random.randint(0, 1) == 1:
                 for card in money_cards:
-                    if not trashed:
-                        if card.__class__ == Copper:
-                            print("trashing Copper for +3")
-                            player.hand.remove(card)
-                            player.money += 3
-                            trashed = True
+                    if not trashed and card.__class__ == Copper:
+                        print("trashing Copper for +3")
+                        player.hand.remove(card)
+                        player.money += 3
+                        trashed = True
             else:
                 print("not trashing copper")
         else:
             print("no copper in hand")
-            return

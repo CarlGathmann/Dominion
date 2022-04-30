@@ -14,7 +14,7 @@ class Chapel(Actioncard):
         # choose random cards to trash
         cards_to_trash = random.randint(0, len(player.hand) or 4)
         if cards_to_trash != 0:
-            for card in range(cards_to_trash):
+            for _ in range(cards_to_trash):
                 if len(player.hand) != 0:
                     choise = random.choice(player.hand)
                     print("trashing %s..." % choise)

@@ -26,4 +26,3 @@ class Remodel(Actioncard):
                     player.discardingPile.append(card_to_draw)
                 else:
                     print("could not find card to take from pile")
-                    return

@@ -2,14 +2,14 @@ from random import random
 
 from src.Dominion import Card
 from src.Dominion.Cardtypes import Actioncard
-from src.Dominion.PlayerLogic import PlayerLogic
+from src.Dominion.play_logic.PlayerLogic import PlayerLogic
 
-
+#TODO!
 class RandomPlayer(PlayerLogic):
     def chooseActionCard(self, hand_cards, game_table) -> Actioncard:
         if len(self.getActionInHand()) != 0:
             choice = random.choice(self.getActionInHand())
-            self.playActioncardInHand(choice, game)
+            self.playActioncardInHand(choice, game_table)
             self.actions -= 1
         else:
             break

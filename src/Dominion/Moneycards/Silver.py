@@ -2,5 +2,5 @@ from src.Dominion.Cardtypes.Moneycard import Moneycard
 
 
 class Silver(Moneycard):
-    def __init__(self):
-        super().__init__(3, 2)
+    EXPENCES = 3
+    MONEY = 2
