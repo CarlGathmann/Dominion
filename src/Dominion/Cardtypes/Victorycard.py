@@ -1,12 +1,7 @@
-from abc import ABC, abstractmethod
-
 from src.Dominion.Card import Card
 
 
-class Victorycard(Card, ABC):
-
-    @classmethod
-    @property
-    @abstractmethod
-    def VICTORYPOINTS(cls):
-        raise NotImplementedError
+class Victorycard(Card):
+    def __init__(self, expenses, victory_points):
+        super().__init__(expenses)
+        self.victory_points = victory_points

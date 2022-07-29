@@ -1,23 +1,23 @@
 import random
 
-from src.Dominion.Cardtypes.Actioncard import Actioncard
+from src.Dominion.Cardtypes.ActionCard import ActionCard
 
 
-class Workshop(Actioncard):
+class Workshop(ActionCard):
     EXPENCES = 3
     CARDS = 0
     ACTIONS = 0
     BUYS = 0
     MONEY = 0
 
-    def specialAction(self, player, game):
+    def special_action(self, player, game):
         possible_cards = []
-        for key in game.gameCards.keys():
-            if game.gameCards[key][0].expences <= 4:
-                possible_cards.append(game.gameCards[key][0])
+        for key in game.game_cards.keys():
+            if game.game_cards[key][0].expenses <= 4:
+                possible_cards.append(game.game_cards[key][0])
         if len(possible_cards) > 0:
             choice = random.choice(possible_cards)
-            player.discardingPile.append(game.getCardFromPile(choice))
+            player.discarding_pile.append(game.get_card_from_pile(choice))
             print("taking", choice)
         else:
             print("no cards to take")

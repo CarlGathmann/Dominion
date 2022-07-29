@@ -1,19 +1,16 @@
 import random
 
-from src.Dominion.Cardtypes.Actioncard import Actioncard
+from src.Dominion.Cardtypes.ActionCard import ActionCard
 from src.Dominion.Moneycards.Copper import Copper
 
 
-class Moneylender(Actioncard):
-    EXPENCES = 4
-    CARDS = 0
-    ACTIONS = 0
-    BUYS = 0
-    MONEY = 0
+class Moneylender(ActionCard):
+    def __init__(self):
+        super(Moneylender, self).__init__(0, 0, 0, 0, 4)
 
-    def specialAction(self, player, game):
+    def special_action(self, player, game):
         trashed = False
-        money_cards = player.getMoneycardsInHand()
+        money_cards = player.get_money_cards_in_hand()
         if len(money_cards) > 0:
             if random.randint(0, 1) == 1:
                 for card in money_cards:

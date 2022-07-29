@@ -2,5 +2,5 @@ from src.Dominion.Cardtypes.Victorycard import Victorycard
 
 
 class Gardens(Victorycard):
-    EXPENCES = 4
-    VICTORYPOINTS = 0
+    def __init__(self):
+        super(Gardens, self).__init__(4, 0)

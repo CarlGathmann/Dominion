@@ -1,15 +1,15 @@
-from src.Dominion.Cardtypes.Actioncard import Actioncard
+from src.Dominion.Cardtypes.ActionCard import ActionCard
 
 
-class Vassal(Actioncard):
+class Vassal(ActionCard):
     EXPENCES = 3
     CARDS = 0
     ACTIONS = 0
     BUYS = 0
     MONEY = 2
 
-    def specialAction(self, player, game):
-        card = player.drawAndReturn()
-        if isinstance(card, Actioncard):
+    def special_action(self, player, game):
+        card = player.draw_and_return()
+        if isinstance(card, ActionCard):
             print("playing", card, "with Vassal")
-            player.playActioncard(card, game)
+            player.play_action_card(card, game)

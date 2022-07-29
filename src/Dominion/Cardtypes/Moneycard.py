@@ -1,12 +1,9 @@
-from abc import ABC, abstractmethod
-
 from src.Dominion.Card import Card
 
 
-class Moneycard(Card, ABC):
+class Moneycard(Card):
+    pass
 
-    @classmethod
-    @property
-    @abstractmethod
-    def MONEY(cls):
-        raise NotImplementedError
+    def __init__(self, expenses, money):
+        super().__init__(expenses)
+        self.money = money

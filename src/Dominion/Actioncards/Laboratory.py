@@ -1,12 +1,12 @@
-from src.Dominion.Cardtypes.Actioncard import Actioncard
+from src.Dominion.Cardtypes.ActionCard import ActionCard
 
 
-class Laboratory(Actioncard):
+class Laboratory(ActionCard):
     EXPENCES = 5
     CARDS = 2
     ACTIONS = 1
     BUYS = 0
     MONEY = 0
 
-    def specialAction(self, player, game):
+    def special_action(self, player, game):
         return

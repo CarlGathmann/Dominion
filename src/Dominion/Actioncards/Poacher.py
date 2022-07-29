@@ -1,19 +1,16 @@
 import random
 
-from src.Dominion.Cardtypes.Actioncard import Actioncard
+from src.Dominion.Cardtypes.ActionCard import ActionCard
 
 
-class Poacher(Actioncard):
-    EXPENCES = 4
-    CARDS = 1
-    ACTIONS = 1
-    BUYS = 0
-    MONEY = 1
+class Poacher(ActionCard):
+    def __init__(self):
+        super().__init__(1, 1, 0, 1, 4)
 
-    def specialAction(self, player, game):
-        for _ in range(17 - len(game.gameCards)):
+    def special_action(self, player, game):
+        for _ in range(17 - len(game.game_cards)):
             if len(player.hand) != 0:
                 choice = random.choice(player.hand)
                 print('discarding', choice)
                 player.hand.remove(choice)
-                player.discardingPile.append(choice)
+                player.discarding_pile.append(choice)

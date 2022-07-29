@@ -4,7 +4,7 @@ if __name__ == '__main__':
     # INIT: create Game
     game = Game()
 
-    while not game.gameOver:
-        game.nextRound()
+    while not game.game_over:
+        game.next_round()
 
-    game.printResults()
+    game.print_results()

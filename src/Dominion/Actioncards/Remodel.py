@@ -1,28 +1,25 @@
 import random
 
-from src.Dominion.Cardtypes.Actioncard import Actioncard
+from src.Dominion.Cardtypes.ActionCard import ActionCard
 
 
-class Remodel(Actioncard):
-    EXPENCES = 4
-    CARDS = 0
-    ACTIONS = 0
-    BUYS = 0
-    MONEY = 0
+class Remodel(ActionCard):
+    def __init__(self):
+        super().__init__(0, 0, 0, 0, 4)
 
-    def specialAction(self, player, game):
+    def special_action(self, player, game):
         hand = player.hand
         if len(hand) > 0:
             choice = random.choice(hand)
             possible_cards = []
-            for option in player.getPossibleBuys(game):
-                if choice.expences + 2 >= option.expences:
-                    possible_cards += game.gameCards[option.__str__()]
+            for option in player.get_possible_buys(game):
+                if choice.expenses + 2 >= option.expenses:
+                    possible_cards += game.game_cards[option.__str__()]
             if len(possible_cards) > 0:
                 want_to_get = random.choice(possible_cards)
-                card_to_draw = game.getCardFromPile(want_to_get)
+                card_to_draw = game.get_card_from_pile(want_to_get)
                 if card_to_draw is not None:
                     print("taking", card_to_draw, "from pile")
-                    player.discardingPile.append(card_to_draw)
+                    player.discarding_pile.append(card_to_draw)
                 else:
                     print("could not find card to take from pile")

@@ -1,7 +1,7 @@
-from src.Dominion.Cardtypes.Actioncard import Actioncard
+from src.Dominion.Cardtypes.ActionCard import ActionCard
 
 
-class Moat(Actioncard):
+class Moat(ActionCard):
     EXPENCES = 2
     CARDS = 2
     ACTIONS = 0
@@ -9,5 +9,5 @@ class Moat(Actioncard):
     MONEY = 0
 
     # Moat is realised in attack cards
-    def specialAction(self, player, game):
+    def special_action(self, player, game):
         return

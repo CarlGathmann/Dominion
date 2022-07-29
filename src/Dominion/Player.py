@@ -1,9 +1,9 @@
 import random
 
-from src.Dominion.play_logic import PlayerLogic
 from src.Dominion.Actioncards.Moat import Moat
-from src.Dominion.Cardtypes.Actioncard import Actioncard
+from src.Dominion.Cardtypes.ActionCard import ActionCard
 from src.Dominion.Cardtypes.Moneycard import Moneycard
+from src.Dominion.Cardtypes.Victorycard import Victorycard
 from src.Dominion.Moneycards.Copper import Copper
 from src.Dominion.Victorycards.Estate import Estate
 
@@ -15,60 +15,65 @@ class Player:
         self.money = 0
         self.buys = 0
         self.actions = 0
-        self.victorypoints = 0
-        self.canBeAttacked = True
+        self.victory_points = 0
+        self.can_be_attacked = True
         self.hand = []
-        self.drawingPile = []
-        self.discardingPile = []
+        self.drawing_pile = []
+        self.discarding_pile = []
         self.played_cards = []
-        self.play_logic : PlayerLogic = None
 
-    def takeTurn(self, game):
+    def take_turn(self, game):
         # PREP
         self.actions = 1
         self.buys = 1
         self.money = 0
-        self.canBeAttacked = True
-        # ACTIONPHASE
-        print("# ACTIONPHASE")
-        self.printHand()
-        self.playActions(game)
-        # BUYPHASE
-        print("# BUYPHASE")
-        self.buyCards(game)
+        self.can_be_attacked = True
+        # ACTION PHASE
+        print("# ACTION PHASE")
+        self.print_hand()
+        self.play_actions(game)
+        # BUY-PHASE
+        print("# BUY-PHASE")
+        self.buy_cards(game)
 
         # DISCARD CARDS
-        self.dicardAllCards()
+        self.dicard_all_cards()
 
         self.draw(5)
 
-    def playActions(self, game):
+    def play_actions(self, game):
         while self.actions > 0:
-            chosen_card = self.play_logic.chooseActionCard(self.hand, game.gameCards)
-            # check if card is valid
-            if chosen_card in self.hand:
-                self.playActioncardInHand(chosen_card, game)
+            if len(self.get_action_in_hand()) != 0:
+                choice = random.choice(self.get_action_in_hand())
+                self.play_action_card_in_hand(choice, game)
                 self.actions -= 1
+            else:
+                break
 
-    def buyCards(self, game):
+    def buy_cards(self, game):
+        for card in self.get_money_cards_in_hand():
+            self.play_money_card(card)
         while self.buys > 0:
-            chosen_card = self.play_logic.buyCard(self.hand, game.gameCards)
-            # check if card is buyable
-            # TODO!
-            if yes:
-                self.discardingPile.append(game.getCardFromPile(choice))
-                self.money -= choice.expences
+            possible_buys = self.get_possible_buys(game)
+            if len(possible_buys) > 0:
+                choice = random.choice(possible_buys)
+                if isinstance(choice, Victorycard):
+                    self.victory_points += choice.victory_points
+                self.discarding_pile.append(game.get_card_from_pile(choice))
+                self.money -= choice.expenses
                 self.buys -= 1
+                print("Buying:", choice)
+            else:
+                print("can't buy anything")
+                self.buys = 0
 
-
-
-    def playMoneycard(self, card: Moneycard):
+    def play_money_card(self, card: Moneycard):
         print("playing: ", card.__str__())
         self.hand.remove(card)
         self.played_cards.append(card)
         self.money += card.money
 
-    def playActioncardInHand(self, card: Actioncard, game):
+    def play_action_card_in_hand(self, card: ActionCard, game):
         print("playing: ", card.__str__())
         self.hand.remove(card)
         self.played_cards.append(card)
@@ -76,35 +81,35 @@ class Player:
         self.buys += card.buys
         self.money += card.money
         self.draw(card.cards)
-        card.specialAction(self, game)
+        card.special_action(self, game)
 
-    def playActioncard(self, card: Actioncard, game):
+    def play_action_card(self, card: ActionCard, game):
         print("playing: ", card.__str__())
         self.actions += card.actions
         self.buys += card.buys
         self.money += card.money
         self.draw(card.cards)
-        card.specialAction(self, game)
+        card.special_action(self, game)
 
-    def getActionInHand(self):
+    def get_action_in_hand(self):
         actions = []
         for card in self.hand:
-            if isinstance(card, Actioncard):
+            if isinstance(card, ActionCard):
                 actions.append(card)
         return actions
 
-    def getMoneycardsInHand(self):
-        moneycards = []
+    def get_money_cards_in_hand(self):
+        money_cards = []
         for card in self.hand:
             if isinstance(card, Moneycard):
-                moneycards.append(card)
-        return moneycards
+                money_cards.append(card)
+        return money_cards
 
-    def getPossibleBuys(self, game):
+    def get_possible_buys(self, game):
         possible_buys = []
-        for key in game.gameCards.keys():
-            if game.gameCards[key][0].expences <= self.money:
-                possible_buys.append(game.gameCards[key][0])
+        for key in game.game_cards.keys():
+            if game.game_cards[key][0].expenses <= self.money:
+                possible_buys.append(game.game_cards[key][0])
         return possible_buys
 
     def draw(self, amount: int):
@@ -112,80 +117,80 @@ class Player:
             print("Drawing", amount, "cards...")
 
         for _ in range(amount):
-            if len(self.drawingPile) != 0:
-                card = self.drawingPile.pop()
+            if len(self.drawing_pile) != 0:
+                card = self.drawing_pile.pop()
                 if card.__class__ == Moat:
-                    self.canBeAttacked = False
+                    self.can_be_attacked = False
                 self.hand.append(card)
-            elif len(self.discardingPile) != 0:
+            elif len(self.discarding_pile) != 0:
                 self.shuffle()
-                card = self.drawingPile.pop()
+                card = self.drawing_pile.pop()
                 if card.__class__ == Moat:
-                    self.canBeAttacked = False
+                    self.can_be_attacked = False
                 self.hand.append(card)
             else:
                 print("No cards to draw")
                 break
 
     def shuffle(self):
-        self.drawingPile += self.discardingPile
-        self.discardingPile.clear()
-        random.shuffle(self.drawingPile)
+        self.drawing_pile += self.discarding_pile
+        self.discarding_pile.clear()
+        random.shuffle(self.drawing_pile)
 
-    def createDeck(self, game):
+    def create_deck(self, game):
         print("\n Creating Deck for player %s..." % self.name)
         for _ in range(7):
-            self.drawingPile.append(game.gameCards.get(str(Copper())).pop())
+            self.drawing_pile.append(game.game_cards.get(str(Copper())).pop())
         for _ in range(3):
-            self.drawingPile.append(game.gameCards.get(str(Estate())).pop())
+            self.drawing_pile.append(game.game_cards.get(str(Estate())).pop())
         self.shuffle()
 
-    def discardFromHand(self, card):
+    def discard_from_hand(self, card):
         self.hand.remove(card)
-        self.discardingPile.append(card)
+        self.discarding_pile.append(card)
 
-    def drawAndReturn(self):
-        if len(self.drawingPile) != 0:
-            return self.drawingPile.pop()
-        elif len(self.discardingPile) != 0:
+    def draw_and_return(self):
+        if len(self.drawing_pile) != 0:
+            return self.drawing_pile.pop()
+        elif len(self.discarding_pile) != 0:
             self.shuffle()
-            return self.drawingPile.pop()
+            return self.drawing_pile.pop()
         else:
             print("no cards to draw")
             return None
 
-    def dicardAllCards(self):
-        self.discardingPile += self.hand
-        self.discardingPile += self.played_cards
+    def dicard_all_cards(self):
+        self.discarding_pile += self.hand
+        self.discarding_pile += self.played_cards
         self.played_cards.clear()
         self.hand.clear()
 
-    def dicardListOfCards(self, cards):
+    def discard_list_of_cards(self, cards):
         print("discarding", len(cards), "cards...")
         for card in cards:
-            self.discardingPile.append(card)
+            self.discarding_pile.append(card)
             self.hand.remove(card)
 
-    def chooseXCardsFromHand(self, x):
+    def choose_x_cards_from_hand(self, x):
         choices = random.sample(self.hand, x)
         return choices
 
-    def printAttributes(self):
+    def print_attributes(self):
         print(
             "Actions: %s, Buys: %s, Money: %s, Handcards: %s, All Cards: %s"
             % (self.actions, self.buys, self.money, len(self.hand),
-               len(self.hand + self.drawingPile + self.discardingPile + self.played_cards))
+               len(self.hand + self.drawing_pile + self.discarding_pile + self.played_cards))
         )
 
-    def printHand(self):
+    def print_hand(self):
         print("Hand:")
         print(*self.hand)
 
-    def printDeck(self):
+    def print_deck(self):
         print("Hand:")
         print(*self.hand)
         print("Drawing Pile:")
-        print(*self.drawingPile)
+        print(*self.drawing_pile)
 
     def __str__(self):
         return str(self.__class__).split(".")[-1].strip("'>")

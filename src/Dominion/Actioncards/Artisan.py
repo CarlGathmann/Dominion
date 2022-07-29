@@ -1,27 +1,23 @@
 import random
 
-from src.Dominion.Cardtypes.Actioncard import Actioncard
+from src.Dominion.Cardtypes.ActionCard import ActionCard
 
 
-class Artisan(Actioncard):
-    EXPENCES = 6
-    CARDS = 0
-    ACTIONS = 0
-    BUYS = 0
-    MONEY = 0
+class Artisan(ActionCard):
+    def __init__(self):
+        super().__init__(0, 0, 0, 0, 6)
 
-    def specialAction(self, player, game):
+    def special_action(self, player, game):
         possible_cards = []
-        for key in game.gameCards.keys():
-            if game.gameCards[key][0].expences <= 5:
-                possible_cards.append(game.gameCards[key][0])
+        for key in game.game_cards.keys():
+            if game.game_cards[key][0].expenses <= 5:
+                possible_cards.append(game.game_cards[key][0])
         if len(possible_cards) > 0:
             choice = random.choice(possible_cards)
-            player.hand.append(game.getCardFromPile(choice))
+            player.hand.append(game.get_card_from_pile(choice))
             second_choice = random.choice(player.hand)
             player.hand.remove(second_choice)
-            player.drawingPile.append(second_choice)
-            print("taking", choice, "and topdecking", second_choice)
-
+            player.drawing_pile.append(second_choice)
+            print("taking", choice, "and top decking", second_choice)
         else:
             print("no cards to take")
