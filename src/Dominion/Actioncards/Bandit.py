@@ -1,30 +1,30 @@
-from src.Dominion.Cardtypes.Actioncard import Actioncard
-from src.Dominion.Cardtypes.Moneycard import Moneycard
+from src.Dominion.Cardtypes.ActionCard import ActionCard
+from src.Dominion.Cardtypes.MoneyCard import MoneyCard
 
 
-class Bandit(Actioncard):
+class Bandit(ActionCard):
     def __init__(self):
         super().__init__(0, 0, 0, 0, 5)
 
-    def specialAction(self, player, game):
+    def special_action(self, player, game):
         try:
-            player.discardingPile.append(game.getCardFromPile('Gold'))
+            player.discarding_pile.append(game.get_card_from_pile('Gold'))
         except KeyError:
             print("no Gold left")
         for player in game.players:
-            if player.canBeAttacked:
+            if player.can_be_attacked:
                 for _ in range(2):
-                    card = player.drawAndReturn()
-                    if isinstance(card, Moneycard):
-                        if card.expences >= 2:
+                    card = player.draw_and_return()
+                    if isinstance(card, MoneyCard):
+                        if card.expenses >= 2:
                             print(player, "trashing", card)
-                            game.garbidge.append(card)
+                            game.garbage.append(card)
                             return
                         else:
                             print(player, "discarding", card)
-                            player.discardingPile.append(card)
+                            player.discarding_pile.append(card)
                     else:
                         print("discarding ", card)
-                        player.discardingPile.append(card)
+                        player.discarding_pile.append(card)
             else:
                 print(player, 'reacts with a Moat')

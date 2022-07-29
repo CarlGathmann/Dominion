@@ -1,9 +1,7 @@
 from src.Dominion.Card import Card
 
 
-class Actioncard(Card):
-    pass
-
+class ActionCard(Card):
     def __init__(self, cards, actions, buys, money, expences):
         super().__init__(expences)
         self.cards = cards
@@ -11,5 +9,5 @@ class Actioncard(Card):
         self.buys = buys
         self.money = money
 
-    def specialAction(self, player, game):
+    def special_action(self, player, game):
         pass

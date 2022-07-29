@@ -1,6 +1,6 @@
-from src.Dominion.Cardtypes.Moneycard import Moneycard
+from src.Dominion.Cardtypes.MoneyCard import MoneyCard
 
 
-class Copper(Moneycard):
+class Copper(MoneyCard):
     def __init__(self):
         super().__init__(0, 1)

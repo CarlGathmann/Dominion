@@ -1,9 +1,9 @@
-from src.Dominion.Cardtypes.Actioncard import Actioncard
+from src.Dominion.Cardtypes.ActionCard import ActionCard
 
 
-class Market(Actioncard):
+class Market(ActionCard):
     def __init__(self):
         super().__init__(1, 1, 1, 1, 5)
 
-    def specialAction(self, player, game):
+    def special_action(self, player, game):
         return

@@ -1,9 +1,9 @@
-from src.Dominion.Cardtypes.Actioncard import Actioncard
+from src.Dominion.Cardtypes.ActionCard import ActionCard
 
 
-class Smithy(Actioncard):
+class Smithy(ActionCard):
     def __init__(self):
         super().__init__(3, 0, 0, 0, 4)
 
-    def specialAction(self, player, game):
+    def special_action(self, player, game):
         return

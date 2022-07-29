@@ -1,22 +1,22 @@
 import random
 
-from src.Dominion.Cardtypes.Actioncard import Actioncard
+from src.Dominion.Cardtypes.ActionCard import ActionCard
 
 
-class Library(Actioncard):
+class Library(ActionCard):
     def __init__(self):
         super(Library, self).__init__(0, 0, 0, 0, 5)
 
-    def specialAction(self, player, game):
+    def special_action(self, player, game):
         cards_in_hand = len(player.hand)
         while cards_in_hand < 7:
-            card = player.drawAndReturn()
+            card = player.draw_and_return()
             if card is not None:
                 print('drawing %s...' % card)
-                if isinstance(card, Actioncard):
+                if isinstance(card, ActionCard):
                     if random.randint(0, 1) == 1:
                         print('discarding', card, '...')
-                        player.discardingPile.append(card)
+                        player.discarding_pile.append(card)
 
                     else:
                         print('adding', card, 'to hand')

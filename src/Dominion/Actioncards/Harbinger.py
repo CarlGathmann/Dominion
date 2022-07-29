@@ -1,17 +1,17 @@
 import random
 
-from src.Dominion.Cardtypes.Actioncard import Actioncard
+from src.Dominion.Cardtypes.ActionCard import ActionCard
 
 
-class Harbinger(Actioncard):
+class Harbinger(ActionCard):
     def __init__(self):
         super().__init__(1, 1, 0, 0, 3)
 
-    def specialAction(self, player, game):
-        if len(player.discardingPile) != 0:
-            choice = random.choice(player.discardingPile)
+    def special_action(self, player, game):
+        if len(player.discarding_pile) != 0:
+            choice = random.choice(player.discarding_pile)
             print("taking", choice, "from discarding pile")
-            player.discardingPile.remove(choice)
-            player.drawingPile.append(choice)
+            player.discarding_pile.remove(choice)
+            player.drawing_pile.append(choice)
         else:
             print("no cards to take from discarding pile")

@@ -1,18 +1,18 @@
 import random
 
-from src.Dominion.Cardtypes.Actioncard import Actioncard
+from src.Dominion.Cardtypes.ActionCard import ActionCard
 
 
-class ThroneRoom(Actioncard):
+class ThroneRoom(ActionCard):
     def __init__(self):
         super(ThroneRoom, self).__init__(0, 0, 0, 0, 4)
 
-    def specialAction(self, player, game):
-        hand = player.getActionInHand()
+    def special_action(self, player, game):
+        hand = player.get_action_in_hand()
         if len(hand) > 0:
             choice = random.choice(hand)
             player.played_cards.append(choice)
             player.hand.remove(choice)
             print("playing ", choice, " twice")
-            player.playActioncard(choice, game)
-            player.playActioncard(choice, game)
+            player.play_action_card(choice, game)
+            player.play_action_card(choice, game)

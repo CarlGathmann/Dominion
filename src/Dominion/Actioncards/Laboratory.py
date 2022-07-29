@@ -1,9 +1,9 @@
-from src.Dominion.Cardtypes.Actioncard import Actioncard
+from src.Dominion.Cardtypes.ActionCard import ActionCard
 
 
-class Laboratory(Actioncard):
+class Laboratory(ActionCard):
     def __init__(self):
         super(Laboratory, self).__init__(2, 1, 0, 0, 5)
 
-    def specialAction(self, player, game):
+    def special_action(self, player, game):
         pass

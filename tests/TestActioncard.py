@@ -10,7 +10,7 @@ class TestCellar(unittest.TestCase):
         self.player.draw(4)
 
     def testCellar(self):
-        self.player.playActioncard(self.actioncard)
+        self.player.play_action_card(self.actioncard, )
         assert len(self.player.hand) == 4
-        assert len(self.player.hand + self.player.discardingPile + self.player.drawingPile + self.player.played_cards) \
+        assert len(self.player.hand + self.player.discarding_pile + self.player.drawingPile + self.player.played_cards) \
                == 10

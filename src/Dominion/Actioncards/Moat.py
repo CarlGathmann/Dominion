@@ -1,10 +1,10 @@
-from src.Dominion.Cardtypes.Actioncard import Actioncard
+from src.Dominion.Cardtypes.ActionCard import ActionCard
 
 
-class Moat(Actioncard):
+class Moat(ActionCard):
     def __init__(self):
         super().__init__(2, 0, 0, 0, 2)
 
     # Moat is realised in attack cards
-    def specialAction(self, player, game):
+    def special_action(self, player, game):
         pass
